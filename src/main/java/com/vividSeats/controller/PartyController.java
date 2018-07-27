@@ -75,7 +75,7 @@ public class PartyController {
             	acquaintances2.add(acquaintance.getAcquaintanceId());
     		}
            
-            if (i == 1){
+            if (possibleCeleb.isEmpty()){
                 person1 = peopleList.get(i - 1);
                 ArrayList<Long> acquaintances1 = new ArrayList<>();
                 for (Acquaintance acquaintance : acquaintanceRepository.findByPersonId(person1.getId())) {
