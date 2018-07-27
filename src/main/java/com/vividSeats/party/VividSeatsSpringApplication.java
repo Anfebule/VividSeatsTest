@@ -45,6 +45,7 @@ public class VividSeatsSpringApplication {
 			personRepository.save(new Person("David"));
 			personRepository.save(new Person("Gerson"));
 			personRepository.save(new Person("Natalia"));
+			personRepository.save(new Person("Andres"));
 			
 			acquaintanceRepository.save(new Acquaintance (1L, 4L));
 			acquaintanceRepository.save(new Acquaintance (1L, 6L));
@@ -59,6 +60,15 @@ public class VividSeatsSpringApplication {
 			acquaintanceRepository.save(new Acquaintance (5L, 6L));
 			acquaintanceRepository.save(new Acquaintance (5L, 2L));
 			acquaintanceRepository.save(new Acquaintance (7L, 6L));
+			
+			/*personRepository.save(new Person("A"));
+			personRepository.save(new Person("B"));
+			personRepository.save(new Person("C"));
+			personRepository.save(new Person("D"));
+
+			acquaintanceRepository.save(new Acquaintance (2L, 1L));
+			acquaintanceRepository.save(new Acquaintance (3L, 1L));
+			acquaintanceRepository.save(new Acquaintance (4L, 1L));*/
 		};
 	}
 }

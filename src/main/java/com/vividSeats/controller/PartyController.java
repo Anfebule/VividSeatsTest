@@ -90,6 +90,7 @@ public class PartyController {
     public Set<Long> compareAcquaintances(ArrayList<Person> peopleList) {
         Person person1, person2;
         Set<Long> possibleCeleb = new HashSet<>();
+        int emptyAcquaintanceCounter = 0;
 
         for (int i = 1; i < peopleList.size(); i++) {
             person2 = peopleList.get(i);
@@ -106,9 +107,9 @@ public class PartyController {
                 	acquaintances1.add(acquaintance.getAcquaintanceId());
         		}
              
-                compareWithPreviousGuest(possibleCeleb, acquaintances1, acquaintances2);
+                emptyAcquaintanceCounter = compareWithPreviousGuest(possibleCeleb, acquaintances1, acquaintances2, emptyAcquaintanceCounter);
             } else {
-                compareWithPossibleCeleb(possibleCeleb, acquaintances2);
+            	emptyAcquaintanceCounter = compareWithPossibleCeleb(possibleCeleb, acquaintances2, emptyAcquaintanceCounter);
             }
         }
 
@@ -117,31 +118,46 @@ public class PartyController {
 
     /**
      * Compares acquaintances of one person between possible celebs list and removes from
-     * possible celebs list the one who's not common
+     * possible celebs list the one who's not common, returns amount of empty acquaintances
      * @param possibleCeleb
      * @param acquaintances2
+     * @return emptyAcquaintanceCounter
      */
-    public void compareWithPossibleCeleb(Set<Long> possibleCeleb, ArrayList<Long> acquaintances2) {
+    public int compareWithPossibleCeleb(Set<Long> possibleCeleb, ArrayList<Long> acquaintances2, int emptyAcquaintanceCounter) {
         Iterator<Long> possibleCelebItr = possibleCeleb.iterator();
-        while (possibleCelebItr.hasNext()){
+        if (acquaintances2.isEmpty()) {
+        	emptyAcquaintanceCounter++;
+        }
+        	
+        while (possibleCelebItr.hasNext() && emptyAcquaintanceCounter > 1){
             Long celebId = Long.parseLong(possibleCelebItr.next().toString());
             if (!acquaintances2.contains(celebId)){
                 possibleCelebItr.remove();
             }
         }
+        return emptyAcquaintanceCounter;
     }
 
     /**
-     * Compares acquaintances between two people and find the common one
+     * Compares acquaintances between two people and find the common one, returns amount of empty acquaintances
      * @param possibleCeleb
      * @param acquaintances1
      * @param acquaintances2
+     * @return emptyAcquaintanceCounter
      */
-    public void compareWithPreviousGuest(Set<Long> possibleCeleb, ArrayList<Long> acquaintances1, ArrayList<Long> acquaintances2) {
+    public int compareWithPreviousGuest(Set<Long> possibleCeleb, ArrayList<Long> acquaintances1, 
+    		ArrayList<Long> acquaintances2, int emptyAcquaintanceCounter) {
+    	if (acquaintances1.isEmpty()) {
+        	emptyAcquaintanceCounter++;
+        }
+    	if (acquaintances2.isEmpty()) {
+    		emptyAcquaintanceCounter++;
+    	}
         for (int j = 0; j<acquaintances2.size(); j++){
             if (acquaintances1.contains(acquaintances2.get(j))){
                 possibleCeleb.add(acquaintances2.get(j));
             }
         }
+        return emptyAcquaintanceCounter;
     }
 }
