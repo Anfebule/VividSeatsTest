@@ -26,6 +26,6 @@ public class VividSeatsSpringApplicationTests {
     public void getCeleb() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("Gerson")));
+                .andExpect(content().string(equalTo("The celeb is: Gerson")));
     }
 }

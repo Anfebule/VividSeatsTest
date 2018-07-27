@@ -38,7 +38,7 @@ public class VividSeatsSpringApplication {
 	public CommandLineRunner demo(PersonRepository personRepository, AcquaintanceRepository acquaintanceRepository) {
 		return (args) -> {
 			// save a couple of people
-			/*personRepository.save(new Person("Juan"));
+			personRepository.save(new Person("Juan"));
 			personRepository.save(new Person("Deiver"));
 			personRepository.save(new Person("Juan Manuel"));
 			personRepository.save(new Person("Mario"));
@@ -58,16 +58,7 @@ public class VividSeatsSpringApplication {
 			acquaintanceRepository.save(new Acquaintance (5L, 3L));
 			acquaintanceRepository.save(new Acquaintance (5L, 6L));
 			acquaintanceRepository.save(new Acquaintance (5L, 2L));
-			acquaintanceRepository.save(new Acquaintance (7L, 6L));*/
-
-			personRepository.save(new Person("A"));
-			personRepository.save(new Person("B"));
-			personRepository.save(new Person("C"));
-			personRepository.save(new Person("D"));
-
-			acquaintanceRepository.save(new Acquaintance (2L, 1L));
-			acquaintanceRepository.save(new Acquaintance (3L, 1L));
-			acquaintanceRepository.save(new Acquaintance (4L, 1L));
+			acquaintanceRepository.save(new Acquaintance (7L, 6L));
 		};
 	}
 }

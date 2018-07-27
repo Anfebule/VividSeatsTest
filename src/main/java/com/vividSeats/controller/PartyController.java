@@ -44,19 +44,43 @@ public class PartyController {
             answer = "There's only one person in the party, maybe he/she is the celeb?";
         } else {
             celebs = compareAcquaintances(peopleList);
-
+            
             //We assume that if there's more than one person that doesn't know anybody
             //then there's no celeb, because the rule isn't complied
-            if(celebs.size() > 1 || celebs.isEmpty()){
+            if(celebs.size() > 1 || celebs.isEmpty() || hasCelebAcqauaintances(findPersonInCelebArray(celebs))){
                 answer = "There's no celb in the party";
             } else {
-                Object[] celebsArray = celebs.toArray();
-                Person person = personRepository.findById(Long.parseLong(celebsArray[0].toString())).get();
-                answer = "The celeb is: "+person.getName();
+                answer = "The celeb is: "+findPersonInCelebArray(celebs).getName();
             }
         }
         return answer;
     }
+    
+    /**
+     * Checks if possible celebrity has acquaintances
+     * @param person
+     * @return
+     */
+    public boolean hasCelebAcqauaintances(Person person) {
+    	boolean hasAqcuaintances;
+    	if(acquaintanceRepository.findByPersonId(person.getId()).isEmpty()) {
+    		hasAqcuaintances = false;
+    	} else {
+    		hasAqcuaintances = true;
+    	}
+    	return hasAqcuaintances;
+    }
+
+	/**
+	 * Finds Person in celebs array first position
+	 * @param celebs
+	 * @return
+	 */
+	public Person findPersonInCelebArray(Set<Long> celebs) {
+		Object[] celebsArray = celebs.toArray();
+		Person person = personRepository.findById(Long.parseLong(celebsArray[0].toString())).get();
+		return person;
+	}
 
     /**
      * Compare acquaintances between people in the party and find the common one
@@ -99,7 +123,7 @@ public class PartyController {
      */
     public void compareWithPossibleCeleb(Set<Long> possibleCeleb, ArrayList<Long> acquaintances2) {
         Iterator<Long> possibleCelebItr = possibleCeleb.iterator();
-        while (possibleCelebItr.hasNext() && !acquaintances2.isEmpty()){
+        while (possibleCelebItr.hasNext()){
             Long celebId = Long.parseLong(possibleCelebItr.next().toString());
             if (!acquaintances2.contains(celebId)){
                 possibleCelebItr.remove();
